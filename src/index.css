@@ -1,0 +1,61 @@
+@tailwind base;
+@layer base {
+  :root {
+    --toastify-font-family: Vazirmatn, sans-serif;
+  }
+  html {
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  body {
+    direction: rtl;
+    @apply font-vazir font-normal leading-tight;
+    min-height: 100vh;
+    /* background: '/public/assets/images/banner-1.webp';
+		background-attachment: fixed;
+		background-position: center;
+		background-size: cover; */
+  }
+}
+
+@tailwind components;
+@tailwind utilities;
+
+.loader {
+  width: 15px;
+  height: 15px;
+  border: 3px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/* html,
+body {
+  background-image: linear-gradient(rgb(229 231 235) 1px, transparent 1px), linear-gradient(to right, rgb(229 231 235) 1px, transparent 1px);
+  background-size: 100px 100px;
+  background-color: rgb(249 250 251);
+} */
+.Toastify__toast {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+}
+.Toastify__toast--rtl {
+}
+.Toastify__toast-body {
+}
