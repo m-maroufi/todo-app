@@ -3,7 +3,6 @@ import { getFullCurrentDate, notify } from "../util/toast";
 import { data } from "autoprefixer";
 const BASE_API = `https://67287e50270bd0b97555b5c6.mockapi.io/api/v1`;
 
-
 // axios.interceptors.request.use((config) => {
 //   config.metadata = { startTime: new Date() };
 //   return config;
@@ -120,19 +119,25 @@ export const getAllTasks = async (userId) => {
     const res = await fetcher.get(
       `/users/${userId}/tasks?order=desc&sortby=tag`
     );
-    if (res.status == 200) {
-      return res.data;
+    if (!res) {
+       return [];
+       
     }
-    throw new Error("خطای شبکه");
+    if (res.status == 404) {
+      return [];
+    }else{
+      return res.data
+    }
+
   } catch (error) {
-    console.log(error);
+    // console.log(error.message);
   }
 };
 
 export const removeTaskById = async (taskId, userId) => {
   try {
     const response = await fetcher.delete(`/users/${userId}/tasks/${taskId}`);
-    console.log(response.status);
+    // console.log(response);
 
     if (response.status == 200) {
       return response.data;
@@ -141,7 +146,7 @@ export const removeTaskById = async (taskId, userId) => {
       throw new Error("خطای حذف اطلاعات");
     }
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
   }
 };
 
@@ -150,7 +155,7 @@ export const markTask = async (taskId, userId) => {
     const response = await fetcher.put(`/users/${userId}/tasks/${taskId}`, {
       tag: "completed",
     });
-    console.log(response);
+    // console.log(response);
 
     if (response.status == 200) {
       return response.data;
@@ -159,7 +164,7 @@ export const markTask = async (taskId, userId) => {
       throw new Error("خطای حذف اطلاعات");
     }
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
   }
 };
 
@@ -171,7 +176,7 @@ export const editTask = async (task) => {
         title: task.title,
       }
     );
-    console.log(response);
+    // console.log(response);
 
     if (response.status == 200) {
       return response.data;
@@ -180,6 +185,6 @@ export const editTask = async (task) => {
       throw new Error("خطای حذف اطلاعات");
     }
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
   }
 };

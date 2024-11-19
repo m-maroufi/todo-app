@@ -5,7 +5,7 @@ import { getAllTasks } from "../API/api";
 const taskContext = createContext();
 
 export const TaskProvider = ({ children }) => {
-  const [tasks, setTasks] = useState();
+  const [tasks, setTasks] = useState([]);
   const [changeTask, setChangeTask] = useState(false);
   const [isPendingTask, setIsPendingTask] = useState(false);
   const { user } = useAuth();
@@ -14,8 +14,10 @@ export const TaskProvider = ({ children }) => {
     const data = await getAllTasks(user.user.id);
     if (data) {
       setTasks(data);
-      setIsPendingTask(false);
+    } else {
+      setTasks([]);
     }
+    setIsPendingTask(false);
   };
   useEffect(() => {
     if (user.isLoggedIn) {
@@ -23,10 +25,13 @@ export const TaskProvider = ({ children }) => {
     }
   }, [user]);
   useEffect(() => {
-    if (changeTask) {
-      fetchTasks();
-      setChangeTask(false);
-    }
+    const fetcher = async () => {
+      if (changeTask) {
+        fetchTasks();
+      }
+    };
+    fetcher();
+    setChangeTask(false);
   }, [changeTask]);
 
   return (
